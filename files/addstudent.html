@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <script src="/js/bootstrap.min.js" ></script>
+    </head>
+    <body>
+        <button class="btn"><a href="/">Home</a></button>
+        <button class="btn"><a href="/students">Students</a></button>
+        <button class="btn"><a href="/addstudent">Add Student</a></button><br><br>
+        <form action="/addstudent" method="post">
+            <input type="text" name="firstname" placeholder="enter firstname"><br>
+            <input type="text" name="lastname" placeholder="enter firstname"><br>
+            <input type="number" name="age" placeholder="enter age"><br>
+            <button type="submit" class="btn btn-success" >Submit</button>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <script src="/js/bootstrap.min.js" ></script>
+    </head>
+    <body>
+        <button class="btn"><a href="/">Home</a></button>
+        <button class="btn"><a href="/students">Students</a></button>
+        <button class="btn"><a href="/addstudent">Add Student</a></button><br><br>
+        <div class="d-flex" >
+            <%students.forEach((s)=>{%>
+                <div class="p-3 border">
+                    <h3><%=s.firstname%> <%=s.lastname%></h3>
+                    <span>Age: <%=s.age%></span><br>
+                    <button id="<%=s._id%>" class="btn btn-danger" onclick="handleDelete(event)">delete</button>
+                </div>
+            <%})%>
+        </div>
+
+        <script>
+            function handleDelete(e){
+                fetch(`http://localhost:3000/deletestudent/${e.target.id}`,{
+                    method:'delete'
+                }).then((res)=>{
+                    return res.json()
+                }).then((resp)=>{
+                    if(resp.deleted){
+                        window.location.reload()
+                    }
+                })
+            }
+        </script>
+    </body>
+</html>
