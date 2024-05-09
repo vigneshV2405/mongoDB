@@ -6,6 +6,7 @@ const Students = require('./models/student_model.js');
 app.use(express.static('static'))
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
+app.set('view-engine','ejs')
 
 app.get('/',(req,res)=>{
     res.sendFile(__dirname+"/files/home.html")
@@ -35,15 +36,31 @@ app.post('/addstudent',(req,res)=>{
     })
     res.redirect('/students')
 })
-app.delete('/deletestudent/:id',(req,res)=>{
-    Students.deleteOne({_id:req.params.id}).then((resp)=>{
-        if(resp.deletedCount){
-            res.json({deleted:true})
-        }
-        else{
-            res.json({deleted:false})
-        }
-    })
+app.delete('/deletestudent/:id',async (req,res)=>{
+    let resp = await Students.deleteOne({_id:req.params.id})
+    if(resp.deletedCount){
+        res.json({deleted:true})
+    }
+    else{
+        res.json({deleted:false})
+    }
 })
-
+app.get('/editstudent/:id',async (req,res)=>{
+    let student = await Students.find({_id:req.params.id})
+    res.render('editstudent.ejs',{data:student[0]})
+})
+app.put('/editstudent',async (req,res)=>{
+    let resp = Students.updateOne(
+        {_id:req.body.id},
+        {
+            $set : {
+                firstname:req.body.firstname,
+                lastname:req.body.lastname,
+                age:req.body.age,
+            }
+        }
+    )
+    console.log(resp)
+    res.json({received:true})
+})
 app.listen(3000,()=>{console.log('server running on 3000')})

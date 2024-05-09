@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <script src="/js/bootstrap.min.js" ></script>
+    </head>
+    <body>
+        <input id="fstname" type="text" name="firstname" value="<%=data.firstname%>" placeholder="enter firstname"><br>
+        <input id="lstname" type="text" name="lastname" value='<%=data.lastname%>' placeholder="enter firstname"><br>
+        <input id="age" type="number" name="age" value="<%=data.age%>" placeholder="enter age"><br>
+        <button class="btn btn-success" onclick="handleEdit()">save changes</button>
+        <script>
+            function handleEdit(){
+                fetch(`http://localhost:3000/editstudent/`,{
+                    method:"PUT",
+                    headers:{
+                        'Content-Type':"application/json"
+                    },
+                    body:JSON.stringify({
+                        firstname:document.getElementById('fstname').value,
+                        lastname:document.getElementById('lstname').value,
+                        age:document.getElementById('age').value,
+                        id:"<%=data._id%>"
+                    })
+                })
+            }
+        </script>
+    </body>
+</html>

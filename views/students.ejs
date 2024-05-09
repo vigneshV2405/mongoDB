@@ -13,6 +13,7 @@
                     <h3><%=s.firstname%> <%=s.lastname%></h3>
                     <span>Age: <%=s.age%></span><br>
                     <button id="<%=s._id%>" class="btn btn-danger" onclick="handleDelete(event)">delete</button>
+                    <button class="btn btn-warning"><a href="/editstudent/<%=s._id%>">edit</a></button>
                 </div>
             <%})%>
         </div>
@@ -28,6 +29,9 @@
                         window.location.reload()
                     }
                 })
+            }
+            function handleEdit(id){
+                
             }
         </script>
     </body>
