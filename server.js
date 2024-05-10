@@ -22,7 +22,7 @@ app.get('/students',async (req,res)=>{
         }
     }
     catch(err){
-        res.send(JSON.stringify(err))
+        res.send("Server is busy/not responding at the moment. Please try after some time")
     }
 })
 app.get('/addstudent',(req,res)=>{
@@ -50,17 +50,21 @@ app.get('/editstudent/:id',async (req,res)=>{
     res.render('editstudent.ejs',{data:student[0]})
 })
 app.put('/editstudent',async (req,res)=>{
-    let resp = Students.updateOne(
+    let resp = await Students.updateOne(
         {_id:req.body.id},
         {
             $set : {
                 firstname:req.body.firstname,
                 lastname:req.body.lastname,
-                age:req.body.age,
+                age:req.body.age
             }
         }
     )
-    console.log(resp)
-    res.json({received:true})
+    if(resp.modifiedCount===1){
+        res.json({updated:true})
+    }
+    else{
+        res.json({updated:false})
+    }
 })
 app.listen(3000,()=>{console.log('server running on 3000')})

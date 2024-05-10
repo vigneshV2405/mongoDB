@@ -10,7 +10,7 @@
         <button class="btn btn-success" onclick="handleEdit()">save changes</button>
         <script>
             function handleEdit(){
-                fetch(`http://localhost:3000/editstudent/`,{
+                fetch(`http://localhost:3000/editstudent`,{
                     method:"PUT",
                     headers:{
                         'Content-Type':"application/json"
@@ -21,6 +21,12 @@
                         age:document.getElementById('age').value,
                         id:"<%=data._id%>"
                     })
+                })
+                .then(res=>res.json())
+                .then((resp)=>{
+                    if(resp.updated){
+                        window.location = "http://localhost:3000/students"
+                    }
                 })
             }
         </script>
